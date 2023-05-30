@@ -8,6 +8,7 @@ wrap(HeaderImageView, "initialize", function (initialize) {
 
 wrap(HeaderImageView, "render", function (render) {
     render.call(this);
+    console.log("Aperio histomics aperio import annotation plugin...")
     $(
         `<button type="button" class="btn btn-default h-import-aperio-xml-annotation" data-toggle="modal" data-target="#importAperioXMLFileModal"><i class="icon-upload"></i> Import Aperio Annotation File...</button>`
     ).insertBefore(this.$(".h-open-image"));
