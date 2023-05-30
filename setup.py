@@ -9,7 +9,7 @@ requirements = [
 ]
 
 setup(
-    author='Girder Developer',
+    author='Moffitt',
     author_email='girder.developer@example.com',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -20,7 +20,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8'
     ],
-    description='An example Girder plugin.',
+    description='Plugin to import Aperio XML annotations to histomics UI.',
     install_requires=requirements,
     license='Apache Software License 2.0',
     long_description=readme,
@@ -29,7 +29,7 @@ setup(
     keywords='girder-plugin, aperio_xml_annotation_import_from_histomics',
     name='aperio_xml_annotation_import_from_histomics',
     packages=find_packages(exclude=['test', 'test.*']),
-    url='https://github.com/girder/aperio_xml_annotation_import_from_histomics',
+    url='https://github.com/steveneschrich/histomics-import-aperio-annotations',
     version='0.1.0',
     zip_safe=False,
     entry_points={
