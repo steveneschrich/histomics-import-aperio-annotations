@@ -9,6 +9,6 @@ wrap(HeaderImageView, "initialize", function (initialize) {
 wrap(HeaderImageView, "render", function (render) {
     render.call(this);
     $(
-        `<button type="button" class="btn btn-default  h-open-tma-grid" data-toggle="modal" data-target="#importAperioXMLFileModal"><i class="icon-upload"></i> Import Aperio Annotation File...</button>`
+        `<button type="button" class="btn btn-default h-import-aperio-xml-annotation" data-toggle="modal" data-target="#importAperioXMLFileModal"><i class="icon-upload"></i> Import Aperio Annotation File...</button>`
     ).insertBefore(this.$(".h-open-image"));
 });
