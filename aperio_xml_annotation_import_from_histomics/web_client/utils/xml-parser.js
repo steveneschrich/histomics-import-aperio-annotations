@@ -16,7 +16,10 @@ const shapeType = {
 const randomStr = () => require("crypto").randomBytes(32).toString("hex");
 
 const parseRegion = (region, lineColor) => {
-    console.log("region: ", region);
+    const area = parseFloat(region.$.Area);
+    if (area === 0) {
+        return;
+    }
     const vertexArray = region.Vertices[0].Vertex;
     let element = {
         fillColor: "rgba(0,0,0,0)",
@@ -48,7 +51,9 @@ const parseRegion = (region, lineColor) => {
         const y1 = parseFloat(vertexArray[0].$.Y);
         const x2 = parseFloat(vertexArray[1].$.X);
         const y2 = parseFloat(vertexArray[1].$.Y);
-        const area = region.$.Area;
+        const zoom = parseFloat(region.$.Zoom);
+
+        const areaMicrons = parseFloat(region.$.AreaMicrons);
         let height, width;
         const midpoint = getCenterCoordinates(x1, y1, x2, y2);
         const isHorizontal = x2 - x1 > y2 - y1;
@@ -89,8 +94,13 @@ export const getAnnotationsBody = (jsonData) => {
     let resultJSONArray = [];
 
     annotation.forEach((annotation) => {
-        const attributes = annotation.Attributes[0].Attribute[0];
-        console.log("Attribute", attributes);
+        const _name =
+            annotation.Attributes[0] !== "object"
+                ? "Default Annotation"
+                : annotation.Attributes[0].Attribute[0].$.Name !== undefined
+                ? annotation.Attributes[0].Attribute[0].$.Name
+                : "";
+
         let regions = annotation.Regions[0].Region;
 
         if (regions === undefined) {
@@ -99,18 +109,19 @@ export const getAnnotationsBody = (jsonData) => {
 
         const lineColor = getRGBFromDecimal(annotation.$.LineColor);
 
-        console.log(regions, lineColor, attributes.$.Name);
-
         let resultJSON = {
             description: "",
             elements: [],
-            name: attributes.$.Name !== undefined ? attributes.$.Name : "",
+            name: _name,
         };
 
         regions = Array.isArray(regions) ? regions : [regions];
 
         regions.forEach((region) => {
-            resultJSON.elements.push(parseRegion(region, lineColor));
+            const parsedRegion = parseRegion(region, lineColor);
+            if (parsedRegion !== undefined) {
+                resultJSON.elements.push(parsedRegion);
+            }
         });
 
         resultJSONArray.push(resultJSON);

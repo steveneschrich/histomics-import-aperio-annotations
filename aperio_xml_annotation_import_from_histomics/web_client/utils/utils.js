@@ -51,9 +51,10 @@ export function getYMinorAxis(area, minorXAxis) {
  * @param {*} height
  * @return {*}
  */
-export function isCircle(minorXAxis, height) {
-  const difference = minorXAxis - height;
-  return difference >= 0 && difference <= 20;
+export function isCircle(minorXAxis, minorYAxis) {
+  // const difference = minorXAxis - height;
+  const difference = Math.abs(minorXAxis - minorYAxis);
+  return difference >= 0 && difference <= 10;
 }
 
 /**
