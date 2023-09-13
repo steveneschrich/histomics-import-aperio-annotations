@@ -51,25 +51,26 @@ const parseRegion = (region, lineColor) => {
         const y1 = parseFloat(vertexArray[0].$.Y);
         const x2 = parseFloat(vertexArray[1].$.X);
         const y2 = parseFloat(vertexArray[1].$.Y);
-        const zoom = parseFloat(region.$.Zoom);
-
-        const areaMicrons = parseFloat(region.$.AreaMicrons);
+        const length = parseFloat(region.$.Length);
+        
         let height, width;
         const midpoint = getCenterCoordinates(x1, y1, x2, y2);
-        const isHorizontal = x2 - x1 > y2 - y1;
 
         width = getDistanceBetween2Points(x1, y1, x2, y2);
         const minorXAxis = width / 2;
         const minorYAxis = getYMinorAxis(area, minorXAxis);
         height = minorYAxis * 2;
-
+        
         const _isCircle = isCircle(minorXAxis, height);
 
         element.center = [midpoint.x, midpoint.y, 0];
         if (_isCircle) {
+            const radius = length / (2 * Math.PI);
             element.type = shapeType.CIRCLE;
-            element.radius = minorXAxis;
+            element.radius = radius;
         } else {
+            const isHorizontal = x2 - x1 > y2 - y1;
+
             if (!isHorizontal) {
                 const temp = width;
                 width = height;
